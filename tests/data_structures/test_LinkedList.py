@@ -15,30 +15,24 @@ def empty_list() -> LinkedList:
 
 @pytest.fixture
 def length1_list() -> LinkedList:
-    linked_list = LinkedList()
-    linked_list.add_to_start(1)
+    linked_list = LinkedList([1])
     return linked_list
 
 
 @pytest.fixture
 def prepared_list() -> LinkedList:
-    linked_list = LinkedList()
-    linked_list.add_to_start(3)
-    linked_list.add_to_start(2)
-    linked_list.add_to_start(1)
+    linked_list = LinkedList([1, 2, 3])
     return linked_list
 
 
 @pytest.fixture
 def list_with_duplicates() -> LinkedList:
-    linked_list = LinkedList.from_value_list([1, 2, 3, 3, 2, 3, 4])
-    return linked_list
+    return LinkedList([1, 2, 3, 3, 2, 3, 4])
 
 
 @pytest.fixture
 def list_with_one_value() -> LinkedList:
-    linked_list = LinkedList.from_value_list([5, 5, 5, 5, 5])
-    return linked_list
+    return LinkedList([5, 5, 5, 5, 5])
 
 
 class TestListNode:
@@ -58,7 +52,7 @@ class TestLinkedList:
         assert not empty_list.head
 
         setup_list = [99, -1, 5, 3]
-        linked_list2 = LinkedList.from_value_list(setup_list)
+        linked_list2 = LinkedList(setup_list)
         assert linked_list2.head.val == 99
         assert linked_list2.to_value_list() == setup_list
 

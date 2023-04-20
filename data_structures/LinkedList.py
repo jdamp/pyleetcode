@@ -2,7 +2,7 @@
 LeetCode class for singly-linked list
 """
 from __future__ import annotations
-from typing import Optional
+from typing import Optional, Any
 
 
 class ListNode:
@@ -15,17 +15,13 @@ class ListNode:
 
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self, items: Optional[list] = None):
         self.head: Optional[ListNode] = None
-        self.size: int = 0
-
-    @classmethod
-    def from_value_list(cls, numbers: list[int]) -> LinkedList:
-        new_list = LinkedList()
+        self._size: int = 0
         # Loop over numbers in reverse since insertion at the start of the linked list is O(1)
-        for num in reversed(numbers):
-            new_list.add_to_start(num)
-        return new_list
+        if items is not None:
+            for item in reversed(items):
+                self.add_to_start(item)
 
     def to_value_list(self):
         return [node.val for node in self]
@@ -39,7 +35,7 @@ class LinkedList:
         """
         tmp_node = ListNode(val)
         tmp_node.next = self.head
-        self.size += 1
+        self._size += 1
         self.head = tmp_node
 
     def append(self, val: int):
@@ -54,7 +50,7 @@ class LinkedList:
         while tail.next:
             tail = tail.next
         tail.next = tmp_node
-        self.size += 1
+        self._size += 1
 
     def remove(self, val: int):
         """
@@ -80,7 +76,7 @@ class LinkedList:
             current = current.next
 
     def __len__(self):
-        return self.size
+        return self._size
 
     def __str__(self):
         link_symbol = " -> "
