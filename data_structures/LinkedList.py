@@ -18,8 +18,6 @@ class LinkedList:
     def __init__(self):
         self.head: Optional[ListNode] = None
         self.size: int = 0
-        self._pos: int = 0
-        self._current: Optional[ListNode] = self.head
 
     @classmethod
     def from_value_list(cls, numbers: list[int]) -> LinkedList:
