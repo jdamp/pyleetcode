@@ -17,14 +17,20 @@ class ListNode:
 class LinkedList:
     def __init__(self):
         self.head: Optional[ListNode] = None
+        self.size: int = 0
+        self._pos: int = 0
+        self._current: Optional[ListNode] = self.head
 
     @classmethod
-    def from_list(cls, numbers: list[int]) -> LinkedList:
+    def from_value_list(cls, numbers: list[int]) -> LinkedList:
         new_list = LinkedList()
         # Loop over numbers in reverse since insertion at the start of the linked list is O(1)
         for num in reversed(numbers):
             new_list.add_to_start(num)
         return new_list
+
+    def to_value_list(self):
+        return [node.val for node in self]
 
     def add_to_start(self, val: int):
         """
@@ -35,6 +41,7 @@ class LinkedList:
         """
         tmp_node = ListNode(val)
         tmp_node.next = self.head
+        self.size += 1
         self.head = tmp_node
 
     def append(self, val: int):
@@ -49,29 +56,44 @@ class LinkedList:
         while tail.next:
             tail = tail.next
         tail.next = tmp_node
+        self.size += 1
 
-    def pop(self):
+    def remove(self, val: int):
         """
-        Removes the last element from the LinkedList
+        Removes all nodes with a value of val
+        :param val:
         :return:
         """
+        dummy_node = ListNode(0, next=self.head)
+        curr_node = dummy_node
+        while curr_node.next:
+            print(self)
+            if curr_node.next.val == val:
+                curr_node.next = curr_node.next.next
+            else:
+                curr_node = curr_node.next
+        self.head = dummy_node.next
+        print(self)
 
-    def __node__iter(self):
+    def __iter__(self):
         current = self.head
         while current:
             yield current
             current = current.next
 
-    def __iter__(self):
-        for node in self.__node__iter():
-            yield node.val
+    def __len__(self):
+        return self.size
 
     def __str__(self):
         link_symbol = " -> "
         parts = []
-        for node_val in self:
-            parts.append(str(node_val))
+        for node in self:
+            parts.append(str(node.val))
             parts.append(link_symbol)
-        # remove last link symbol
-        parts.pop()
+        # remove last link symbol if we have at least one node
+        if parts:
+            parts.pop()
         return "".join(parts)
+
+    def __repr__(self):
+        return f"<LinkedList: ({self})>"
