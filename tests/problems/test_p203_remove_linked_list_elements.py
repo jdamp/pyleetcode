@@ -21,5 +21,5 @@ def leetcode_examples():
 
 def test_remove_elements(leetcode_examples):
     for inp, val, out in leetcode_examples:
-        linked_list = LinkedList.from_value_list(inp)
+        linked_list = LinkedList(inp)
         assert remove_elements(linked_list, val).to_value_list() == out
